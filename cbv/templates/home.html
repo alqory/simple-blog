@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Home base
+{% endblock title %}
+
+
+{% block content %}
+
+<div class="container">
+    <h4 class="border-bottom ">Artikel Terbaru </h4>
+    <div class="row">
+        {% for data in data_list %}
+        <div class="col-md-4 mt-5">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body mb-3">
+                  <h5 class="card-title">{{ data.judul }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ data.kategori }}</h6>
+                  <a href="{% url 'blog:detail' data.slug %}" class="nav-link">
+                    <p class="nav-item">{{ data.isi|truncatechars:90}}</p>
+                </a>
+                <p class="nav-item">{{ data.kategori }} | {{ data.published|date }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+{% endblock content %}

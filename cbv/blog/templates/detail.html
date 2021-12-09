@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Detail - {{ Detail_list.judul }}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="container">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                  <h1 class="display-5">{{ Detail_list.judul|title }}</h1>
+                  <p class="lead">{{ Detail_list.kategori }} | {{ Detail_list.published|date }}.</p>
+                </div>
+              </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="">{{ Detail_list.isi }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md " style="margin-bottom: 50px;">
+        <h4>Kategori</h4>
+        {% for kategori in kategori_list %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a class="nav-link" href="{% url 'blog:kategori' kategori %}">{{ kategori }}</a>
+            </li> 
+        </ul>
+        {% endfor %}
+        <br>
+
+        <h4>Artikel serupa</h4>
+        {% for kategori in kategori_serupa %}
+            {% if forloop.counter is not 3 %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a class="nav-link" href="{% url 'blog:detail' kategori.slug %}">
+                        <h5>{{ kategori.judul }}</h5>
+                    </a>
+                    <p>{{ kategori.published|date }}</p>
+                </li> 
+            {% endif %}
+        {% endfor %}
+                <li class="list-group-item">
+                    <a href="{% url 'blog:kategori' Detail_list.kategori %}" class="nav-link">Selengkapnya . . </a>
+                </li>
+            </ul>
+    </div>
+</div>
+   
+    </div>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Hapus Artikel
+{% endblock title %}
+
+{% block content %}
+
+<h4>Artikel "{{ artikel_data.judul }}" Akan di hapus. </h4>
+    <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Ya</button>
+        <a type="button" class="btn btn-outline-info" href="{% url 'blog:manage' %}">Batal</a>
+    </form>
+{% endblock content %}

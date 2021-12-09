@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock title %}
+
+{% block content %}
+<div class="mt-8">
+    <form method='get' class="" name="myforms" onsubmit="return validation()">
+        <div class="form-group col-md-9">
+            <input type='text' class="form-control mr-3"   name='artikel' value='{{ request.POST.artikel }}' placeholder="Cari ?">
+        </div>
+    </form>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-9">
+        <div class="container">
+            <div class="row">
+                {% for artikel in Artikel_list %}
+                <div class="col-6 col-md-4 mb-3">
+                    <div class="card rounded" style="width: 15rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ artikel.judul }}</h5>
+                            <a href="{% url 'blog:detail' artikel.slug %}" class="nav-link">
+                                <p class="nav-item">{{ artikel.isi|truncatechars:90}}</p>
+                            </a>
+                            <p class="nav-item">{{ artikel.kategori }} | {{ artikel.published|date }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <nav aria-label="...">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item ">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    {% endif %}
+
+                    {% for page in paginator.page_range %}
+                    {% if page is page_obj.number %}
+                    <li class="page-item active">
+                        <span class="page-link" href="#">{{ page }}</span>
+                    </li>
+                    {% else %}
+                    <li class="page-item ">
+                        <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    <!-- <span class="sr-only">(current)</span> -->
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <div class="col-md-3 border-left">
+        <h4>kategori</h4>
+        {% for kategori in kategori_list %}
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a class="nav-link" href="{% url 'blog:kategori' kategori %}">{{ kategori }}</a>
+            </li> 
+        </ul>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function validation(e) {
+        let forms = document.forms['myforms']['artikel'].value;
+        const regExp = /^[a-zA-Z]*$<?/
+        if( !regExp.test( forms ) ) {
+            alert('Anda memasukan karakter yang dilarang');
+            return false;
+        }
+        return True;
+    }
+</script>
+{% endblock content %}

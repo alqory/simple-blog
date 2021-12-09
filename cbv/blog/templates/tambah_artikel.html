@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    create blog
+{% endblock title %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.judul.id_for_label }}" class="font-weight-bold">{{ form.judul.label }}</label>
+            <input type="text" class="form-control" name="{{ form.judul.name }}" maxlength="{{ form.judul.max }}"  required id="{{ form.judul.id_for_label }}">
+        </div>
+        <div class="form-group">
+            <label for="{{ form.isi.id_for_label }}" class="font-weight-bold">{{ form.isi.label }}</label>
+            <textarea name="{{ form.isi.name }}" class="form-control" required id="{{ form.isi.id_for_label }}"  rows="10"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="{{ form.kategori.id_for_label }}" class="font-weight-bold">{{ form.kategori.label }}</label>
+            <input type="text" class="form-control" name="{{ form.kategori.name }}" maxlength="{{ form.judul.max }}" required id="{{ form.judul.id_for_label }}">
+        </div>
+        <button class="btn btn-primary" type="submit">Post</button>
+    </form>
+{% endblock content %}
